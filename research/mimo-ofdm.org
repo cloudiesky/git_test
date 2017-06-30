@@ -1,5 +1,52 @@
 
 * mimo-ofdm 
+
+** RF-chips
+
+*** spec compare
+| 项目                    | AD9361            | AD9364           |
+|-------------------------+-------------------+------------------|
+| RF收发器                | 2x2               | 1x1              |
+| 接收器                  | 6路差分，12路单端 | 3路差分或6路单端 |
+| 噪声系数                | 2 dB              | <2.5 dB          |
+| 发射器                  | 双发射器，4路差分 | 2频差分          |
+|-------------------------+-------------------+------------------|
+| ADDA                    | 12b               | 12b              |
+| TDD                     | 支持              | 支持             |
+| FDD                     | 支持              | 支持             |
+| 频段                    | 70MHz~6.0GHz      | 70MHz~6.0GHz     |
+| 可调谐通道带宽          | <200kHz 到 56MHz  | <200kHz 到 56MH  |
+| TxEVM                   | ≤-40 dB          | ≤-40 dB         |
+| Tx噪声                  | ≤-157dBm/Hz      | ≤-157dBm/Hz     |
+| Tx监控器，动态          | ≥66dB            | ≥66dB           |
+| Tx监控器，精度          | 1dB               | 1dB              |
+| 集成小数N分频频率合成器 | 2.4Hz             | 2.4Hz            |
+| 多器件同步              | 支持              | 支持             |
+| 数字接口                | CMOS/LVDS         | CMOS/LVDS        |
+
+*** 电学特性，传输性能一致。
+*** 封装，管脚相似
+- AD9364的管教接地 
+
+*** 评估板
+- AD9361
+  - AD-FMCOMMS2-EBZ
+    AD9361 Software Defined Radio Board (2.4GHz Optimized) $750
+
+  - AD-FMCOMMS3-EBZ
+    AD9361 Wideband Software Defined Radio Board $750    
+
+  - AD-FMCOMMS4-EBZ
+    AD9364 Wideband Software Defined Radio Board
+    1 x 1 Transceiver wideband prototyping and RF performance Board
+    $399
+
+  - AD-FMCOMMS5-EBZ
+    RF Synchronized 4x4 Dual AD9361 Transceiver Evaluation Board	
+    $1125.00
+  
+
+*** 
 ** OFDM 
 正交频分复用(orthogonal frequency-division multiplexing)。
 ofdm使用大量紧邻的正交子载波（orthogonal-sub-carrier），每个子载波采用传统的调整方案进行低符号率调制。
