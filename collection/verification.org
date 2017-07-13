@@ -1,0 +1,105 @@
+* verification platform                                      :platform:Study:
+** work test
+** referenc document
+*** verification directory structure
+- verification :: top
+  - ut :: module verification platform
+  - tool
+    - dul_dir.pl :: script, generate simulation directories
+    - file_head.pl :: script, generate file header.
+  - st :: system simulation head
+    - software :: store *.dua file
+      - code.dua :: default software
+    - rm :: reference model ??
+      - lib :: simulation lib file(Memory/IO/RNG/...)
+      - usb :: usb host model ??
+    - tb :: testbench
+      - top :: testbench top
+      - task :: system define, probe etc.
+    - tc :: test case
+      - cgu :: tc_cgu.sv
+      - iom :: tc_iom.sv
+      - ... :: .....
+    - sim :: simlulation directory(RTL simulation & post simulation)
+      - cgu :: cgu simulation directory
+        - outputs :: contain reference file. simulation output should be here. compare them.
+        - logs :: logfiles. monitoring procedure, collectiong debug infomation
+        - cover :: function coverage report debug/simv.cm
+        - wave ::  VCD, VPD, fsdb format waveforms.
+        - run :: running directory
+          - Makefile
+      - Makefile1 :: system simulation common makefile/VCS OPTIONS
+
+*** testbench structure
+- xx_tb_top :: top
+  - DUT :: design under test
+  - xx_config.sv :: a class define valuables in the env eg. test_case, tc_name
+  - xx_op_inst :: commond function for decoding the firmware. Debug mathod.
+    1. There several MCU operations defined by the testbench. write byte, write half-word, write word, read byte, read half-word, read_word, nop, error etc.
+    2. Testbench define several reg-addr, reg-value, and opperation sequeence. These regs is used for firmware to recognize, if there is a operation request, what is the request operation, what the operation values are.
+    3. Debug firmware loop until operation indecation reg change to constant value. Debug firmware excute the operation(R/W/NOP). Turn back to loop state.
+  - xx_api_macro :: system function macros. Such as register scan macros
+    - Q: why use macros, is task better? Espectially, commond parameter integer m.
+    - examples
+      #+BEGIN_SRC verilog
+      `ifndef API_MACRO_SV
+      `define API_MACRO_SV
+      integer m;
+      `define glu_chk_rht_afe(signal,width,clk,err_sr); \
+         fork \
+         begin \
+            for (m=0; m<width; m++) begin \
+               repeat (7) @(posedge clk); \
+            end \
+         end \
+         @(err_sr) `dis_err(`"err_sr glue logic judge right test error`"); \
+         @(err_sr) `dis_err($psprintf("err_sr %d",m)) \
+         join_any \
+         disable fork;
+      `endif // API_MACRO_SV
+      #+END_SRC
+    - Register scan define
+      - WrAndRd
+      - ReadDefaultValue
+      - ReadDefaultValueUse
+      - ROCompare :: read only check, frontdoor read, force frontdoor read, backdoor read.
+      - WOCompare :: write only
+      - W1C0Compare :: write '1' clear '0'
+      - RegScan :: write 'h5555_5555 ,'haaaa_aaaa.
+      - RegScanWO
+      - RegScanW1C0
+      - PAROTY_MON :: forever monitor sig, when posedge sig, gen FailFlag event(->FailFlag)
+  - xx_macrodef :: system macros, Such as module path (digital & anolog), memory path, debug registers.
+  - xx_probe :: make wire to system internal sigals, PC, reset, clock, memory data codec funcions.
+    - reset :: POR, reset chip, reset global
+    - Clk ::  all the clocks
+    - Iom :: IO mux signals
+    - PC probes :: core status signals, AHB bus
+    - Memory Probes :: communicate software with testbench memory probe.
+  - xx_encdec :: encode decode funcions, Xram flash
+  - xx_sysinit :: system initial funcions, ram_init flash_init.
+    - Monitor VCC poweron in UPF mode
+    - erase all RAMs and ROMs
+  - xx_sysmon :: system monitor functions & initial block. Clock glitch check, simulation pass/fail check.
+    - key signal check :: forever monitor POR, Reset, Iom, Sleep, DeepSleep.
+    - clock glitch :: timing check rules
+      example.
+      
+      #+BEGIN_SRC verilog
+      specify
+      $width(posedge clk, `Glitch_Width);
+      endspecify
+      #+END_SRC
+    - TbMonitor :: testbench monitor for judging test result
+      - check register and wait for PassFlag.
+    - simulation global control :: create new tb_cfg and display simution time.
+    - interrupt monitor :: monitor the core bus, check interrupt address.
+  - xx_dumpwav :: dumpwave control.
+  - sdf_annotate ::  sdf file relate.
+
+      
+                      
+               
+                    
+              
+

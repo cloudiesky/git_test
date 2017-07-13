@@ -1,0 +1,11 @@
+* uart接口
+** 数据结构
+- stardard
+  1. Idle at high
+  2. start bit 0
+  3. data bit 0~7
+  4. a parity bit (optional)
+  5. stop (one or more) bit high
+  6. If the line is held in the logic low condition for longer than a character time, this is a break condition that can be detected by the UART.
+** 波特率
+115200

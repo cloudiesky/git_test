@@ -1,0 +1,41 @@
+* Install new fonts in linux without root privileges
+** If you do not have root access, it is possible to install new fonts.
+
+mkdir ~/.fonts
+
+Move your fonts to ~/.fonts.
+
+mkfontdir ~/.fonts
+xset fp+ ~/.fonts
+xset fp rehash
+
+The new font should now be available. Check if the new font has been added by running xlsfonts.
+
+xlsfonts
+
+Try out the new font
+
+xterm -fn "new_font"
+
+** For TrueType fonts, the installation process is a little different.
+
+mkdir ~/.fonts
+
+Move your fonts to ~/.ttfonts
+
+mv *.ttf ~/.fonts
+
+Create the fonts.dir and fonts.scale files.
+
+cd ~/.fonts
+mkfontscale
+mkfontdir
+fc-cache -fv ~/.fonts
+
+The new font should now be available. Check if the font has been added by running fc-list.
+
+fc-list
+
+Try out the new font.
+
+xterm -fn "xft:new_font"

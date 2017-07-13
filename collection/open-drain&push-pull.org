@@ -1,0 +1,3 @@
+* open-drain & push-pull
+开漏和推挽
+
