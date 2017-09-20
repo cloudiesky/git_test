@@ -14,7 +14,7 @@
 typedef struct __cfg
 {
   char mod; // constellation type, bpsk, qpsk, 16-qam, 64-qam
-  int lenth; // data lenth in bit.
+  int length; // data length in bit.
 }cfg_t;
 
 #endif
