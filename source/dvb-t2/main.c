@@ -14,6 +14,9 @@
 #include "init_cfg.h"
 #include "tx_bmap_wr.h"
 
+
+
+
 int main(void) {
 
 	cfg_t config;
