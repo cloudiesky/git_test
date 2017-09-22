@@ -11,6 +11,10 @@
 #include <assert.h>
 #include "config.h"
 #include <time.h>
+#include "global.h"
+
+
+
 int init_cfg(cfg_t* config, int FidCfgFile)
 {
 
@@ -31,7 +35,7 @@ int init_cfg(cfg_t* config, int FidCfgFile)
 
 
 #ifdef RANDSEED
-	config->RandSeed = `RANDSEED;
+	config->RandSeed = RANDSEED;
 #else
 	config->RandSeed = (unsigned)time(NULL);
 #endif

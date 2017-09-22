@@ -10,12 +10,12 @@
 #include "config.h"
 #include "tx_bmap_di_gen.h"
 #include "tx_bmap_demux.h"
+#include "tx_bmap_map.h"
 int tx_bmap_wr(cfg_t* config, int FidLogFile)
 {
 
 	int *DI;
-	int *DO_DEMUX_I;
-	int *DO_DEMUX_Q;
+	int *DO_DEMUX;
 	float *DO_MAP_I;
 	float *DO_MAP_Q;
 
@@ -37,9 +37,9 @@ int tx_bmap_wr(cfg_t* config, int FidLogFile)
 		 tx_bmap_di_gen(numBits, &DI);
 	 }
 
-	 tx_bmap_demux(Mod, numBits, &DO_DEMUX_I, &DO_DEMUX_Q, &DI);
+	 tx_bmap_demux(Mod, numBits, &DO_DEMUX, &DI);
 
-	 tx_bamp_map(Mod, Len, &DO_MAP_I, &DO_MAP_Q,  &DO_DEMUX_I, &DO_DEMUX_Q);
+	 tx_bmap_map(Mod, Len, &DO_MAP_I, &DO_MAP_Q,  &DO_DEMUX);
 
 	return EXIT_SUCCESS;
 }

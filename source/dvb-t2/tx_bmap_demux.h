@@ -10,5 +10,5 @@
 #define TX_BMAP_WR_H_
 
 #include "config.h"
-int tx_bmap_demux(int Mod, int numBits, int**DO_I, int**DO_Q, int**DI);
+int tx_bmap_demux(int Mod, int numBits, int**DO, int**DI);
 #endif

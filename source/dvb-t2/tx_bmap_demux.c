@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "debug.h"
-void tx_bmap_demux(int Mod, int numBits, int **DO_I, int **DO_Q, int **DI)
+void tx_bmap_demux(int Mod, int numBits, int **DO, int **DI)
 {
 	unsigned InLen;
 	unsigned OutLen;
@@ -33,41 +33,40 @@ void tx_bmap_demux(int Mod, int numBits, int **DO_I, int **DO_Q, int **DI)
 		break;
 	default :
 		assert(Mod<=3);
+    OutLen = 0;
 	}
 
-	*DO_I = (int *)malloc(OutLen * sizeof(int));
-	*DO_Q = (int *)malloc(OutLen * sizeof(int));
+	*DO = (int *)malloc(OutLen * sizeof(int));
 
 	switch (Mod){
 	case 0 :
 		for(i = 0; i < OutLen; i++){
-			(*DO_I)[i] = (*DI)[i];
-			(*DO_Q)[i] = 0;
+			(*DO)[i] = (*DI)[i];
 		}
 		break;
 	case 1 :
 		for(i = 0; i < OutLen; i++){
-			(*DO_I)[i] = ((*DI)[2*i]   << 0);
-			(*DO_Q)[i] = ((*DI)[2*i+1] << 1);
+			(*DO)[i] = (((*DI)[2*i]   << 0) |         \
+                  ((*DI)[2*i+1] << 1));
 		}
 		break;
 	case 2 :
 		for(i = 0; i < OutLen; i++){
-			(*DO_I)[i] = ((*DI)[4*i] << 0)   | \
-					     ((*DI)[4*i+1] << 1) ;
-			(*DO_Q)[i] = ((*DI)[4*i+2] << 2) | \
-						 ((*DI)[4*i+3] << 0);
+			(*DO)[i] = (((*DI)[4*i] << 0)   |         \
+                  ((*DI)[4*i+1] << 1) |         \
+                  ((*DI)[4*i+2] << 2) |         \
+                  ((*DI)[4*i+3] << 3));
 		}
 		break;
 	case 3 :
 		for(i = 0; i < OutLen; i++){
-			(*DO_I)[i] = ((*DI)[6*i] << 0)   | \
-					     ((*DI)[6*i+1] << 1) | \
-						 ((*DI)[6*i+2] << 2) ;
-			(*DO_Q)[i] = ((*DI)[6*i+3] << 0) | \
-						 ((*DI)[6*i+4] << 1) | \
-						 ((*DI)[6*i+5] << 2) ;
-			debug(V_DEBUG, "%d ,%d\n",(*DO_I)[i],(*DO_Q)[i]);
+			(*DO)[i] = (((*DI)[6*i] << 0)   |        \
+                  ((*DI)[6*i+1] << 1) |        \
+                  ((*DI)[6*i+2] << 2) |        \
+                  ((*DI)[6*i+3] << 3) |        \
+                  ((*DI)[6*i+4] << 4) |        \
+                  ((*DI)[6*i+5] << 5) );
+			debug(V_DEBUG, "%d \n",(*DO)[i]);
 		}
 		break;
 	default :
