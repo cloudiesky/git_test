@@ -12,5 +12,5 @@
 #define TX_BMAP_WR_H_
 
 #include "config.h"
-int tx_bmap_wr(cfg_t* config, int FidLogFile);
+int tx_bmap_wr(cfg_t* config, int **DI);
 #endif

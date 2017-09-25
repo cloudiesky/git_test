@@ -38,6 +38,7 @@ void tx_bmap_map(int Mod,                       \
         c_f[i][1] = C_POINTS_QPSK[i][1] * sin(ROT_QPSK) / C_QPSK;
         debug(V_DEBUG,"%d,%f,%f\n",i,c_f[i][0],c_f[i][0]);
       }
+      debug(V_DEBUG,"c_qpsk %f\n",(C_QPSK));
       break;
     case 2 : // 16-QAM
       for (i=0; i<16; i++) {
@@ -45,6 +46,7 @@ void tx_bmap_map(int Mod,                       \
         c_f[i][1] = C_POINTS_16QAM[i][1] * sin(ROT_16QAM) / C_16QAM;
         debug(V_DEBUG,"%d,%f,%f\n",i,c_f[i][0],c_f[i][0]);
       }
+      debug(V_DEBUG,"c_16qam %f\n",(C_16QAM));
       break;
     case 3 :
       for (i=0; i<64; i++) {
@@ -52,6 +54,7 @@ void tx_bmap_map(int Mod,                       \
         c_f[i][1] = C_POINTS_64QAM[i][1] * sin(ROT_64QAM) / C_64QAM;
         debug(V_DEBUG,"%d,%f %fi,%d,%d\n",i,c_f[i][0],c_f[i][1],C_POINTS_64QAM[i][0],C_POINTS_64QAM[i][1]);
       }
+      debug(V_DEBUG,"c_64qam %f\n",(C_64QAM));
       break;
     default :
       assert(Mod <= 3);
@@ -61,7 +64,7 @@ void tx_bmap_map(int Mod,                       \
   (*DO_I) = (float*)malloc(Len * sizeof(float));
   (*DO_Q) = (float*)malloc(Len * sizeof(float));
 
-  debug(V_DEBUG,"MAPPING START\n");
+  debug(V_DEBUG,"\nMAPPING START\n");
   
   if (Mod == 0){
     for(i=0; i<Len; i++){
@@ -73,7 +76,7 @@ void tx_bmap_map(int Mod,                       \
     for (i=0; i<Len; i++){
       (*DO_I)[i] = c_f[((*DI)[i])][0];
       (*DO_Q)[i] = c_f[((*DI)[i])][1];
-      debug(V_DEBUG,"%d,%.2d,%f,%f\n",i,(*DI)[i],(*DO_I)[i],(*DO_Q)[i]);
+      debug(V_DEBUG,"%.3d, %.2d,%f,%f\n",i,(*DI)[i],(*DO_I)[i],(*DO_Q)[i]);
     }
   }
   else

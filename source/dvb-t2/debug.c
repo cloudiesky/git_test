@@ -7,15 +7,18 @@
 #include <stdio.h>
 #include <stdlib.h> /* atoi() */
 #include <stdarg.h>
+#include <assert.h>
 
 #define V_DEBUG  100
 #define V_HIGH   75
 #define V_MEDIUM 50
 #define V_LOW    25
 #define V_NONE   0
+
 #ifndef VERB
 #define VERB 100
 #endif
+
 void debug(int level, const char *fmt, ...)
 {
 	int debug_level;
@@ -28,4 +31,20 @@ void debug(int level, const char *fmt, ...)
 		vprintf(fmt, ap);
 		va_end(ap);
 	}
+}
+
+void write_af(const char *fname, int len, float **af)
+{
+
+  int i;
+  FILE *fid;
+
+  fid = fopen(fname, "w");
+
+  for(i=0; i<len; i++)
+    {
+      fprintf(fid, "%f\n", (*af)[i]);
+    }
+
+  fclose(fid);
 }

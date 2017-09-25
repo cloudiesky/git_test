@@ -16,7 +16,8 @@ V_LOW    = 25,
 V_NONE   = 0
 }Verb;
 
-
-
 void debug(int level, const char *fmt, ...);
+
+void write_af(const char *fname, int len, float **af);
+
 #endif

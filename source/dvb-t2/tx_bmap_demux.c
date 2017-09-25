@@ -66,7 +66,7 @@ void tx_bmap_demux(int Mod, int numBits, int **DO, int **DI)
                   ((*DI)[6*i+3] << 3) |        \
                   ((*DI)[6*i+4] << 4) |        \
                   ((*DI)[6*i+5] << 5) );
-			debug(V_DEBUG, "%d \n",(*DO)[i]);
+			debug(V_DEBUG, "%d, %d \n",i,(*DO)[i]);
 		}
 		break;
 	default :
