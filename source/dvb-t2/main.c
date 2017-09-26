@@ -11,40 +11,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
 #include "config.h"
 #include "init_cfg.h"
 #include "tx_bmap_wr.h"
 #include "tx_bmap_di_gen.h"
+#include "rx_bmap_wr.h"
 
 int main(void) {
 
-	cfg_t config;
-	//FILE *FidLogFile;
-	 FILE *FidCfgFile;
+  cfg_t *config;
+  //FILE *FidLogFile;
+   FILE *FidCfgFile;
 
-  int *DI;
+  int *TxDI;
+  float *TxDoI;
+  float *TxDoQ;
 
-	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+  float *RxDiI;
+  float *RxDiQ;
+  int *RxDo;
 
-  
+  puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+
+
 
   FidCfgFile = fopen("./log/tx_bmap_cfg.txt","w");
-  //FidLogFile = fopen("./log/tx_bmap_log.txt","w");
+  assert(FidCfgFile);
 
-  //assert(FidCfgFile);
-  //assert(FidLogFile);
 
-	init_cfg(&config, FidCfgFile);
+  init_cfg(&config, FidCfgFile);
 
-  if (config.InSrc == 0)
+  if (config->InSrc == 0)
   {
-    tx_bmap_di_gen(config.numBits, &DI);
+    tx_bmap_di_gen(config->numBits, &TxDI);
   }
 
-	tx_bmap_wr(&config, &DI);
+  tx_bmap_wr(config, &TxDI, &TxDoI, &TxDoQ);
+
+  rx_bmap_wr(config, &RxDiI, &RxDiQ, &RxDo);
 
   fclose(FidCfgFile);
   //fclose(FidLogFile);
 
-	return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

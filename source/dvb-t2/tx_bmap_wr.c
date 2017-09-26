@@ -10,17 +10,14 @@
 
 #include "config.h"
 #include "debug.h"
-#include "tx_bmap_di_gen.h"
 #include "tx_bmap_demux.h"
 #include "tx_bmap_map.h"
 
-int tx_bmap_wr(cfg_t* config, int **DI)
+int tx_bmap_wr(cfg_t *config, int **Di, float **DoI, float **DoQ)
 {
 
 	
-	int *DO_DEMUX;
-	float *DO_MAP_I;
-	float *DO_MAP_Q;
+	int *DoDemux;
 
 	/*
 	 * parameter definition
@@ -29,23 +26,25 @@ int tx_bmap_wr(cfg_t* config, int **DI)
 	int Len = config->Len;
 	int numBits = config->numBits;
 
+  //printf("cfg file name %c\n", config->FnameTxBmapMapDoI);
+
+  debug(V_DEBUG,"output file name is :  %s\n",config->FnameTxBmapMapDoI);
+  debug(V_DEBUG,"Mod is  %d ",config->Mod);
+
 	/*
 	 * procedure
 	 */
-	 //if (InSrc == 0)
-	 //{
-	 //  tx_bmap_di_gen(numBits, &DI);
-	 //}
 
-  tx_bmap_demux(Mod, numBits, &DO_DEMUX, &(*DI));
+  tx_bmap_demux(Mod, numBits, &DoDemux, &(*Di));
   
-  tx_bmap_map(Mod, Len, &DO_MAP_I, &DO_MAP_Q,  &DO_DEMUX);
+  tx_bmap_map(Mod, Len, &(*DoI), &(*DoQ),  &DoDemux);
 
    /*
     * log
     */
-   write_af("./log/tx_bmap_map__do_map_i", Len, &DO_MAP_I);
-   write_af("./log/tx_bmap_map__do_map_q", Len, &DO_MAP_Q);
+  //write_af(FnameDoI, Len, &(*DoI));
+  write_af("./log/tx_bmap_map__do_map_i.txt", Len, &(*DoI));
+  write_af("./log/tx_bmap_map__do_map_q.txt", Len, &(*DoQ));
 
 	return EXIT_SUCCESS;
 }

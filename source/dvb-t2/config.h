@@ -34,6 +34,11 @@ typedef struct __cfg
   unsigned RandSeed;
   // randseed
 
+  char *FnameTxBmapMapDoI;
+  char *FnameTxBmapMapDoQ;
+
+  char *FnameRxBmapMapDo;
+
 }cfg_t;
 
 #endif

@@ -11,5 +11,5 @@
 #define INIT_CFG_H_
 
 #include "config.h"
-int init_cfg(cfg_t* config, FILE *FidCfgFile);
+int init_cfg(cfg_t **config, FILE *FidCfgFile);
 #endif

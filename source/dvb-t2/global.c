@@ -8,6 +8,8 @@
 
 #include <math.h>
 
+const int C_POINTS_BPSK[2] = {1, -1};
+
 const int C_POINTS_QPSK[4][2] = {{1,1}, {1,-1}, {-1,1}, {-1-1}};
 
 const int C_POINTS_16QAM[16][2] = \

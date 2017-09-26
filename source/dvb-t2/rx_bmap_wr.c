@@ -10,37 +10,31 @@
 
 #include "config.h"
 #include "debug.h"
-//#include "rx_bmap_demux.h"
-//#include "rx_bmap_map.h"
 
-int rx_bmap_wr(cfg_t* config, FILE *FidLogFile)
+#include "rx_bmap_demap.h"
+#include "rx_bmap_mux.h"
+
+int rx_bmap_wr(cfg_t *config, float **DiI, float **DiQ, int **Do)
 {
 
-	//int *DI;
-	//int *DO_DEMUX;
-	//float *DO_MAP_I;
-	//float *DO_MAP_Q;
-	//int i;
+
+  int *DoMap;
 
 	/*
 	 * parameter definition
 	 */
-	//int Mod = config->Mod;
-	//int Len = config->Len;
-	//int numBits = config->numBits;
-	//int InSrc = config->InSrc;
+	int Mod = config->Mod;
+	int Len = config->Len;
+	int numBits = config->numBits;
+
 
 	/*
 	 * procedure
 	 */
-  //if (InSrc == 0)
-  //  {
-      //rx_bmap_di_gen(numBits, &DI);
-  //  }
 
-  //rx_bmap_demux(Mod, numBits, &DO_DEMUX, &DI);
+  rx_bmap_demap(Mod, Len, &DoMap, &(*DiI),  &(*DiQ));
 
-  //rx_bmap_map(Mod, Len, &DO_MAP_I, &DO_MAP_Q,  &DO_DEMUX);
+  rx_bmap_mux(Mod, numBits, &(*Do), &DoMap);
 
   /*
    * log
