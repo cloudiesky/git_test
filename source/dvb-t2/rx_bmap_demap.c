@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 #include <assert.h>
 #include "debug.h"
 #include "global.h"
@@ -21,11 +22,14 @@ void rx_bmap_demap(int Mod,                     \
                    )
 {
   int i, j;
-  float delta_min, delta_tmp;
+  float delta_min, delta_tmp, delta_i, delta_q;
   int i_min;
   int c_loop;
   float c_f[64][2];
 
+
+ 
+  
   debug(V_DEBUG,"Rotate Constellation map:\n");
   switch (Mod)
     {
@@ -58,30 +62,53 @@ void rx_bmap_demap(int Mod,                     \
       for (i=0; i<64; i++) {
         c_f[i][0] = C_POINTS_64QAM[i][0] * cos(ROT_64QAM) / C_64QAM;
         c_f[i][1] = C_POINTS_64QAM[i][1] * sin(ROT_64QAM) / C_64QAM;
-        debug(V_DEBUG,"%d,%f %fi,%d,%d\n",i,c_f[i][0],c_f[i][1],C_POINTS_64QAM[i][0],C_POINTS_64QAM[i][1]);
+        //debug(V_DEBUG,"%d,%f %fi,%d,%d\n",i,c_f[i][0],c_f[i][1],C_POINTS_64QAM[i][0],C_POINTS_64QAM[i][1]);
       }
-      debug(V_DEBUG,"c_64qam %f\n",(C_64QAM));
+      //debug(V_DEBUG,"c_64qam %f\n",(C_64QAM));
       break;
     default :
+      c_loop = 0;
       assert(Mod <= 3);
     }
-  debug(V_DEBUG,"\nGen done\n");
+  debug(V_DEBUG,"\nDemap Gen done\n");
 
+  *DO = (int *)malloc(sizeof(int) * Len);
+
+  debug(V_DEBUG, "Demap start\n");
   if (Mod == 0) {
     for (i = 0; i < Len; i++){
+      if (abs((*DI_I)[i] - c_f[0][0]) < \
+          abs((*DI_I)[i] - c_f[0][1]))
+        (*DO)[i] = 0;
+      else
+        (*DO)[i] = 1;
+    }
+  }
+  else if (Mod <= 3) {
+    for (i = 0; i < Len; i++){
       i_min = 0;
-      delta_min = abs((*DiI)[i] - c_f[0][0]);
-      for (j = 1; j < c_loop; j++){
-        delta_tmp = abs((*DiI)[i] - c_f[0][j]);
-        if (delta_min > delta_tmp){
+      delta_min = FLT_MAX;
+
+      for (j = 0; j < c_loop; j++){
+        //delta_tmp = abs((*DI_I)[i] - c_f[i][0]) + abs((*DI_Q)[i] - c_f[i][1]);
+        delta_i = (((*DI_I)[i]) - c_f[j][0]);
+        delta_q = (((*DI_Q)[i]) - c_f[j][1]);
+        delta_tmp = delta_i * delta_i + delta_q * delta_q;
+
+        if(delta_min > delta_tmp){
           delta_min = delta_tmp;
           i_min = j;
         }
+        //debug(V_MEDIUM, "%d %f \n", i_min, delta_min);
       }
-    }
-    else if (Mod <= 3) {
-      
+      (*DO)[i] = i_min;
+      debug(V_DEBUG, "Demap: %d\t%d\t%f\t%f\t%f\n", i, (*DO)[i], (*DI_I)[i], (*DI_Q)[i], delta_min);
     }
   }
+  else
+    assert(Mod <= 3);
+
+  //debug(V_DEBUG, "%d\n", (*DO)[0]);
+  debug(V_DEBUG, "Demap Done");
 }
 

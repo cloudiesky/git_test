@@ -49,6 +49,9 @@ int main(void) {
 
   tx_bmap_wr(config, &TxDI, &TxDoI, &TxDoQ);
 
+  RxDiI = TxDoI;
+  RxDiQ = TxDoQ;
+
   rx_bmap_wr(config, &RxDiI, &RxDiQ, &RxDo);
 
   fclose(FidCfgFile);

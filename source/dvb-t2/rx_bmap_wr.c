@@ -18,7 +18,7 @@ int rx_bmap_wr(cfg_t *config, float **DiI, float **DiQ, int **Do)
 {
 
 
-  int *DoMap;
+  int *DoDemap;
 
 	/*
 	 * parameter definition
@@ -32,9 +32,9 @@ int rx_bmap_wr(cfg_t *config, float **DiI, float **DiQ, int **Do)
 	 * procedure
 	 */
 
-  rx_bmap_demap(Mod, Len, &DoMap, &(*DiI),  &(*DiQ));
+  rx_bmap_demap(Mod, Len, &DoDemap, &(*DiI),  &(*DiQ));
 
-  rx_bmap_mux(Mod, numBits, &(*Do), &DoMap);
+  rx_bmap_mux(Mod, numBits, &(*Do), &DoDemap);
 
   /*
    * log

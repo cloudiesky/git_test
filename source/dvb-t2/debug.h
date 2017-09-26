@@ -11,7 +11,7 @@
 typedef enum{
 V_DEBUG  = 100,
 V_HIGH   = 75,
-V_MERIUM = 50,
+V_MEDIUM = 50,
 V_LOW    = 25,
 V_NONE   = 0
 }Verb;
