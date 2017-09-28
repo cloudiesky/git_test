@@ -7,6 +7,9 @@
 
 
 #include <math.h>
+const int BPC[4] = {1, 2, 4, 6};
+
+const int FFT_SIZE[2] = {1024, 4096};
 
 const int C_POINTS_BPSK[2] = {1, -1};
 

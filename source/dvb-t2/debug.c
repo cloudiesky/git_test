@@ -16,17 +16,14 @@
 #define V_NONE   0
 
 #ifndef VERB
-#define VERB 100
+#define VERB 50
 #endif
 
 void debug(int level, const char *fmt, ...)
 {
-	int debug_level;
-
-	debug_level = VERB;
 
 	va_list ap;
-	if( level <= debug_level ){
+  if( level <= VERB ){
 		va_start(ap, fmt);
 		vprintf(fmt, ap);
 		va_end(ap);

@@ -109,6 +109,6 @@ void rx_bmap_demap(int Mod,                     \
     assert(Mod <= 3);
 
   //debug(V_DEBUG, "%d\n", (*DO)[0]);
-  debug(V_DEBUG, "Demap Done");
+  debug(V_DEBUG, "Demap Done\n");
 }
 

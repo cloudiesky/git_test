@@ -37,13 +37,15 @@ int init_cfg(cfg_t **config, FILE FidCfgFile)
 	(*config)->Mod      = 3;
 	(*config)->Len      = 128;
 	(*config)->InSrc    = 0;
+  (*config)->FftTyp   = 0;
 
-  debug(V_DEBUG, "config->Mod  %d\t", (*config)->Mod);
-  debug(V_DEBUG, "config->Len  %d\t", (*config)->Len);
-  debug(V_DEBUG, "config->InSrc  %d\t", (*config)->InSrc);
-  debug(V_DEBUG, "config->FnameTxBmapMapDoI  %s\t", (*config)->FnameTxBmapMapDoI);
-  debug(V_DEBUG, "config->FnameTxBmapMapDoQ  %s\t", (*config)->FnameTxBmapMapDoQ);
-  debug(V_DEBUG, "config->FnameRxBmapMapDo   %s\t", (*config)->FnameRxBmapMapDo);
+  debug(V_DEBUG, "config->Mod  %d\n", (*config)->Mod);
+  debug(V_DEBUG, "config->Len  %d\n", (*config)->Len);
+  debug(V_DEBUG, "config->InSrc  %d\n", (*config)->InSrc);
+  debug(V_DEBUG, "config->FftTyp  %d: FFT_SIZE %d\n", (*config)->FftTyp, FFT_SIZE[(*config)->FftTyp]);
+  debug(V_DEBUG, "config->FnameTxBmapMapDoI  %s\n", (*config)->FnameTxBmapMapDoI);
+  debug(V_DEBUG, "config->FnameTxBmapMapDoQ  %s\n", (*config)->FnameTxBmapMapDoQ);
+  debug(V_DEBUG, "config->FnameRxBmapMapDo   %s\n", (*config)->FnameRxBmapMapDo);
   
 
 	switch ((*config)->Mod){

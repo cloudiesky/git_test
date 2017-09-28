@@ -20,8 +20,8 @@ typedef struct __cfg
 	// 64-qam = 3
 	int Mod;
 
-  int Len;
   // data length in bit.
+  int Len;
 
   /* total bits */
   int numBits;
@@ -31,13 +31,16 @@ typedef struct __cfg
   // 1 read from file.
   int InSrc;
 
-  unsigned RandSeed;
   // randseed
+  unsigned RandSeed;
 
   char *FnameTxBmapMapDoI;
   char *FnameTxBmapMapDoQ;
 
   char *FnameRxBmapMapDo;
+
+  // fft/ifft size: 0 -> 1k; 1 -> 4k
+  int FftTyp;
 
 }cfg_t;
 

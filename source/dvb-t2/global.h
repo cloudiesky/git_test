@@ -11,6 +11,10 @@
 
 #define RANDSEED 1
 
+extern const int BPC[4];
+
+extern const int FFT_SIZE[2];
+
 extern const int C_POINTS_BPSK[2];
 
 extern const int C_POINTS_QPSK[4][2];
