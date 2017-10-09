@@ -16,7 +16,11 @@
 #include "debug.h"
 #include "fft.h"
 
-int rx_fft_core(int FftTyp, float **DiI, float **DiQ, float **DoI, float **DoQ)
+int rx_fft_core(int FftTyp,  \
+                float **DiI, \
+                float **DiQ, \
+                float **DoI, \
+                float **DoQ  )
 {
 
   size_t n;

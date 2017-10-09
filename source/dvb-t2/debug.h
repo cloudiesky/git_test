@@ -19,5 +19,5 @@ V_NONE   = 0
 void debug(int level, const char *fmt, ...);
 
 void write_af(const char *fname, int len, float **af);
-
+void write_ai(const char *fname, int len, int **ai);
 #endif

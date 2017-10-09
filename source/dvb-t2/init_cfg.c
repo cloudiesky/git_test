@@ -19,24 +19,48 @@
 int init_cfg(cfg_t **config, FILE FidCfgFile)
 {
 
-  int i;
+  const char FnameTxBmapDi[]     = "./log/tx_bmap_map__di.txt";
   const char FnameTxBmapMapDoI[] = "./log/tx_bmap_map__do_map_i.txt";
   const char FnameTxBmapMapDoQ[] = "./log/tx_bmap_map__do_map_Q.txt";
-  const char FnameRxBmapMapDo[] =  "./log/rx_bmap_map__do_map.txt";
+  const char FnameTxIftAlignDoI[] = "./log/tx_ift_align__do_i.txt";
+  const char FnameTxIftAlignDoQ[] = "./log/tx_ift_align__do_q.txt";
+
+  const char FnameRxFftCoreDoI[] = "./log/rx_fft_core__do_i.txt";
+  const char FnameRxFftCoreDoQ[] = "./log/rx_fft_core__do_q.txt";
+  
+  const char FnameRxBmapMapDo[]  = "./log/rx_bmap_map__do_map.txt";
 
 
   (*config) = (cfg_t *)malloc(sizeof(cfg_t));
-  (*config)->FnameTxBmapMapDoI = (char *)malloc(sizeof(FnameTxBmapMapDoI) * sizeof(char));
-  (*config)->FnameTxBmapMapDoQ = (char *)malloc(sizeof(FnameTxBmapMapDoQ) * sizeof(char));
-  (*config)->FnameRxBmapMapDo  = (char *)malloc(sizeof(FnameRxBmapMapDo) * sizeof(char));
 
+  (*config)->FnameTxBmapDi      = (char *)malloc(sizeof(FnameTxBmapDi) * sizeof(char));
+
+  (*config)->FnameTxBmapMapDoI  = (char *)malloc(sizeof(FnameTxBmapMapDoI) * sizeof(char));
+  (*config)->FnameTxBmapMapDoQ  = (char *)malloc(sizeof(FnameTxBmapMapDoQ) * sizeof(char));
+
+  (*config)->FnameTxIftAlignDoI = (char *)malloc(sizeof(FnameTxIftAlignDoI) * sizeof(char));
+  (*config)->FnameTxIftAlignDoQ = (char *)malloc(sizeof(FnameTxIftAlignDoQ) * sizeof(char));
+
+  (*config)->FnameRxFftCoreDoI  = (char *)malloc(sizeof(FnameRxFftCoreDoI) * sizeof(char));
+  (*config)->FnameRxFftCoreDoQ  = (char *)malloc(sizeof(FnameRxFftCoreDoQ) * sizeof(char));
+
+  (*config)->FnameRxBmapMapDo   = (char *)malloc(sizeof(FnameRxBmapMapDo) * sizeof(char));
+
+  memcpy((*config)->FnameTxBmapDi, FnameTxBmapDi, sizeof(FnameTxBmapDi));
   memcpy((*config)->FnameTxBmapMapDoI, FnameTxBmapMapDoI, sizeof(FnameTxBmapMapDoI));
   memcpy((*config)->FnameTxBmapMapDoQ, FnameTxBmapMapDoQ, sizeof(FnameTxBmapMapDoQ));
+
+  memcpy((*config)->FnameTxIftAlignDoI, FnameTxIftAlignDoI, sizeof(FnameTxIftAlignDoI));
+  memcpy((*config)->FnameTxIftAlignDoQ, FnameTxIftAlignDoQ, sizeof(FnameTxIftAlignDoQ));
+
+  memcpy((*config)->FnameRxFftCoreDoI, FnameRxFftCoreDoI, sizeof(FnameRxFftCoreDoI));
+  memcpy((*config)->FnameRxFftCoreDoQ, FnameRxFftCoreDoQ, sizeof(FnameRxFftCoreDoQ));
+
   memcpy((*config)->FnameRxBmapMapDo,  FnameRxBmapMapDo,  sizeof(FnameRxBmapMapDo));
 
 	(*config)->Mod      = 3;
 	(*config)->Len      = 128;
-	(*config)->InSrc    = 0;
+	(*config)->InSrc    = 1;
   (*config)->FftTyp   = 0;
 
   debug(V_DEBUG, "config->Mod  %d\n", (*config)->Mod);

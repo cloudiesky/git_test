@@ -12,5 +12,10 @@
 #define RX_FFT_CORE_H_
 
 #include "config.h"
-int rx_fft_core(int FftTyp, float **DiI, float **DiQ, float **DoI, float **DoQ);
+int rx_fft_core(int FftTyp,   \
+                float **DiI,  \
+                float **DiQ,  \
+                float **DoI,  \
+                float **DoQ   \
+                );
 #endif

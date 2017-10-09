@@ -9,6 +9,6 @@
 #ifndef TX_BMAP_DI_GEN_H_
 #define TX_BMAP_DI_GEN_H_
 
-int* tx_bmap_di_gen(int numBits, int **DI);
+int* tx_bmap_di_gen(cfg_t *config, int **DI);
 
 #endif

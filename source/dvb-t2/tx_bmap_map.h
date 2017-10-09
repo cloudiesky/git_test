@@ -9,10 +9,10 @@
 #ifndef TX_BMAP_MAP_H_
 #define TX_BMAP_MAP_H_
 
-int* tx_bmap_map(int Mod,                       \
-                 int Len,                       \
-                 float **DO_I,              \
-                 float **DO_Q,              \
-                 int **DI);
+int* tx_bmap_map(int Mod,         \
+                 int Len,         \
+                 int **DI,        \
+                 float **DO_I,    \
+                 float **DO_Q     );
 
 #endif

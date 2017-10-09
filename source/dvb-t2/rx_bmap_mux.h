@@ -10,5 +10,8 @@
 #define RX_BMAP_WR_H_
 
 #include "config.h"
-int rx_bmap_mux(int Mod, int numBits, int**DO, int**DI);
+int rx_bmap_mux(int Mod,                        \
+                int numBits,                    \
+                int**DI,                        \
+                int**DO                        );
 #endif

@@ -48,26 +48,25 @@ int main(void) {
 
   printf("Info Verbosity = %d\n",VERB);
 
-  
   FidCfgFile = fopen("./log/tx_bmap_cfg.txt","w");
   assert(FidCfgFile);
 
-
+  // initial config;
   init_cfg(&config, FidCfgFile);
 
-  if (config->InSrc == 0)
-  {
-    tx_bmap_di_gen(config->numBits, &TxBmapDi);
-  }
+  // tx gen data in
+	TxBmapDi=(int*)malloc((config->numBits)*(sizeof(int)));
+  tx_bmap_di_gen(config, &TxBmapDi);
 
   // tx map
+  TxBmapDoI = (float*)malloc(config->Len * sizeof(float));
+  TxBmapDoQ = (float*)malloc(config->Len * sizeof(float));
   tx_bmap_wr(config, &TxBmapDi, &TxBmapDoI, &TxBmapDoQ);
 
   // tx ifft
   TxIftDoI = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
   TxIftDoQ = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
   tx_ift_wr(config,  &TxBmapDoI, &TxBmapDoQ, &TxIftDoI, &TxIftDoQ);
-  //debug(V_DEBUG,"Sizeof tx_ift_do_i %d\n", sizeof(TxIftDoQ));
 
 
   // rx fft
@@ -78,15 +77,31 @@ int main(void) {
   rx_fft_wr(config, &RxFftDiI, &RxFftDiQ, &RxFftDoI, &RxFftDoQ);
 
   // rx demap
-  RxBmapDiI = TxBmapDoI;
-  RxBmapDiQ = TxBmapDoQ;
+  RxBmapDiI = RxFftDoI;
+  RxBmapDiQ = RxFftDoQ;
+  RxBmapDo = (int *)malloc(sizeof(int) * config->numBits);
   rx_bmap_wr(config, &RxBmapDiI, &RxBmapDiQ, &RxBmapDo);
 
 
   cmp_tx_rx(config->numBits, &TxBmapDi, &RxBmapDo);
 
+  free(TxBmapDoI);
+  free(TxBmapDoQ);
+
+  free(RxBmapDo);
+
   free(TxIftDoI);
   free(TxIftDoQ);
+
+  //free(RxFftDiI);
+  //free(RxFftDiQ);
+
+  free(RxFftDoI);
+  free(RxFftDoQ);
+
+  //free(RxBmapDiI);
+  //free(RxBmapDiQ);
+
   fclose(FidCfgFile);
   //fclose(FidLogFile);
 

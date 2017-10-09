@@ -23,7 +23,6 @@ int rx_fft_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ)
 	 */
 	int Mod = config->Mod;
 	int Len = config->Len;
-	int numBits = config->numBits;
   int FftTyp = config->FftTyp;
 
   //printf("cfg file name %c\n", config->FnameTxIftMapDoI);
@@ -34,25 +33,21 @@ int rx_fft_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ)
   DoFftQ = (float *)malloc(sizeof(float) * FFT_SIZE[FftTyp]);
 
 
-
-  //debug(V_DEBUG,"output file name is :  %s\n",config->FnameTxIftMapDoI);
-  //debug(V_DEBUG,"Mod is  %d ",config->Mod);
-
 	/*
 	 * procedure
 	 */
-  rx_fft_core(FftTyp,  &(DoFftI), &(DoFftQ), &(*DiI), &(*DiQ));
-  rx_fft_align(FftTyp, Mod, Len, &(*DoI), &(*DoQ), &(DoFftI), &(DoFftQ));
+  rx_fft_core(FftTyp, &(*DiI), &(*DiQ), &(DoFftI), &(DoFftQ));
+  rx_fft_align(FftTyp, Mod, Len, &(DoFftI), &(DoFftQ), &(*DoI), &(*DoQ));
 
   /*
    * log
    */
-  //write_af(FnameDoI, Len, &(*DoI));
-  //write_af("./log/rx_fft_map__do_map_i.txt", Len, &(*DoI));
-  //write_af("./log/rx_fft_map__do_map_q.txt", Len, &(*DoQ));
+  write_af(config->FnameRxFftCoreDoI, FFT_SIZE[FftTyp], &(DoFftI));
+  write_af(config->FnameRxFftCoreDoQ, FFT_SIZE[FftTyp], &(DoFftQ));
+
 
   free(DoFftI);
   free(DoFftQ);
-  
+
 	return EXIT_SUCCESS;
 }

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
+#include <math.h>
 #include "config.h"
 #include "global.h"
 #include "debug.h"
@@ -17,11 +17,17 @@ int tx_ift_align(int FftTyp, int Mod, int Len, float **DiI, float **DiQ, float *
 {
 
   int i;
-
+  //float tmp, tmp1;
 	/*
 	 * parameter definition
 	 */
   int numPad;
+
+
+  //test;
+  //tmp = M_PI * 256;
+  //tmp1 = M_PI << 8;
+  //debug(V_DEBUG,"Multiply %f, lefshit %f", tmp, tmp1);
 
 
   // Input data should not fill all cells.
@@ -49,12 +55,12 @@ int tx_ift_align(int FftTyp, int Mod, int Len, float **DiI, float **DiQ, float *
   // To Do : get the properbly data for padding.
   for (i = 0; i < numPad; i++){
     if ((i%2) == 0) {
-      (*DoI)[(i+Len)*2] = 0;
-      (*DoQ)[(i+Len)*2] = 0;
+      (*DoI)[(i+Len)*2] = rand()%2;
+      (*DoQ)[(i+Len)*2] = rand()%2;
     }
     else {
-      (*DoI)[(i+Len)*2+1] = 0;
-      (*DoQ)[(i+Len)*2+1] = 0;
+      (*DoI)[(i+Len)*2+1] = rand()%2;
+      (*DoQ)[(i+Len)*2+1] = rand()%2;
     }
   }
 
@@ -63,12 +69,12 @@ int tx_ift_align(int FftTyp, int Mod, int Len, float **DiI, float **DiQ, float *
   // To Do : fill with PN seriel data.
   for (i = 0; i < numPad + Len; i++){
     if ((i%2) == 0) {
-      (*DoI)[i*2+1] = 0;
-      (*DoQ)[i*2+1] = 0;
+      (*DoI)[i*2+1] = rand()%2;
+      (*DoQ)[i*2+1] = rand()%2;
     }
     else {
-      (*DoI)[i*2] = 0;
-      (*DoQ)[i*2] = 0;
+      (*DoI)[i*2] = rand()%2;
+      (*DoQ)[i*2] = rand()%2;
     }
   }
 

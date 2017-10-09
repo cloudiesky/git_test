@@ -34,13 +34,20 @@ typedef struct __cfg
   // randseed
   unsigned RandSeed;
 
+  // fft/ifft size: 0 -> 1k; 1 -> 4k
+  int FftTyp;
+
+  char *FnameTxBmapDi;
   char *FnameTxBmapMapDoI;
   char *FnameTxBmapMapDoQ;
 
-  char *FnameRxBmapMapDo;
+  char *FnameTxIftAlignDoI;
+  char *FnameTxIftAlignDoQ;
 
-  // fft/ifft size: 0 -> 1k; 1 -> 4k
-  int FftTyp;
+  char *FnameRxFftCoreDoI;
+  char *FnameRxFftCoreDoQ;
+
+  char *FnameRxBmapMapDo;
 
 }cfg_t;
 

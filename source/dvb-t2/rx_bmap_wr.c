@@ -32,15 +32,16 @@ int rx_bmap_wr(cfg_t *config, float **DiI, float **DiQ, int **Do)
 	 * procedure
 	 */
 
-  rx_bmap_demap(Mod, Len, &DoDemap, &(*DiI),  &(*DiQ));
+  DoDemap = (int *)malloc(sizeof(int) * Len);
 
-  rx_bmap_mux(Mod, numBits, &(*Do), &DoDemap);
+  rx_bmap_demap(Mod, Len, &(*DiI),  &(*DiQ), &DoDemap);
+
+  rx_bmap_mux(Mod, numBits, &DoDemap, &(*Do));
 
   /*
    * log
    */
-  //write_af("./log/rx_bmap_map__do_map_i", Len, &DO_MAP_I);
-  //write_af("./log/rx_bmap_map__do_map_q", Len, &DO_MAP_Q);
+  //write_ai(config->FnameRxBmapMapDo, Len, &DoDemap);
 
 	return EXIT_SUCCESS;
 }

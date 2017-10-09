@@ -9,21 +9,40 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+
 #include "debug.h"
-void tx_bmap_di_gen(int numBits, int **DI)
+#include "config.h"
+
+void tx_bmap_di_gen(cfg_t *config, int **DI)
 {
 	int i;
+  int di_tmp;
+  FILE *fp;
 
-	(*DI)=(int*)malloc((numBits)*(sizeof(int)));
-
-	//puts("DI in gen.");
-	for (i = 0; i<(numBits); i++)
-	{
-		(*DI)[i] = rand() % 2;
-		debug(V_DEBUG,"%d",(*DI)[i]);
-	}
-
-	//printf("\naddress = %d\n", (int)(*DI));
-	//puts("Out of gen");
-	debug(V_DEBUG,"\nGen done\n");
+  if (config->InSrc == 0) {
+    debug(V_DEBUG,"DI in gen.");
+    for (i = 0; i<(config->numBits); i++)
+      {
+        (*DI)[i] = rand() % 2;
+        debug(V_DEBUG,"%d",(*DI)[i]);
+        if ((i%4 == 0) | (i == config->numBits-1))
+          debug(V_DEBUG,"\n");
+      }
+    debug(V_DEBUG,"Gen done\n");
+    write_ai(config->FnameTxBmapDi, config->numBits, DI);
+  }
+  else {
+    fp = fopen(config->FnameTxBmapDi, "r");
+    assert(fp);
+    for (i = 0; i<(config->numBits); i++)
+      {
+        if(fscanf(fp,"%d",&di_tmp)){
+          assert((di_tmp == 0) | (di_tmp == 1));
+          (*DI)[i] = di_tmp;
+        }
+        else
+          printf("Error: Reading from file %s\n",config->FnameTxBmapDi);
+      }
+  }
 }

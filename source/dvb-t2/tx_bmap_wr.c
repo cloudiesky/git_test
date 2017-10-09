@@ -16,8 +16,7 @@
 int tx_bmap_wr(cfg_t *config, int **Di, float **DoI, float **DoQ)
 {
 
-	
-	int *DoDemux;
+  int *DoDemux;
 
 	/*
 	 * parameter definition
@@ -26,25 +25,24 @@ int tx_bmap_wr(cfg_t *config, int **Di, float **DoI, float **DoQ)
 	int Len = config->Len;
 	int numBits = config->numBits;
 
-  //printf("cfg file name %c\n", config->FnameTxBmapMapDoI);
 
   debug(V_DEBUG,"output file name is :  %s\n",config->FnameTxBmapMapDoI);
-  debug(V_DEBUG,"Mod is  %d ",config->Mod);
 
 	/*
 	 * procedure
 	 */
 
-  tx_bmap_demux(Mod, numBits, &DoDemux, &(*Di));
-  
-  tx_bmap_map(Mod, Len, &(*DoI), &(*DoQ),  &DoDemux);
+	DoDemux = (int *)malloc(numBits * sizeof(int));
+  tx_bmap_demux(Mod, numBits, &(*Di), &DoDemux);
+  tx_bmap_map(Mod, Len, &DoDemux, &(*DoI), &(*DoQ));
 
    /*
     * log
     */
-  //write_af(FnameDoI, Len, &(*DoI));
-  write_af("./log/tx_bmap_map__do_map_i.txt", Len, &(*DoI));
-  write_af("./log/tx_bmap_map__do_map_q.txt", Len, &(*DoQ));
+  write_af(config->FnameTxBmapMapDoI, Len, &(*DoI));
+  write_af(config->FnameTxBmapMapDoQ, Len, &(*DoQ));
+
+  free(DoDemux);
 
 	return EXIT_SUCCESS;
 }

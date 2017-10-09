@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "debug.h"
-void tx_bmap_demux(int Mod, int numBits, int **DO, int **DI)
+void tx_bmap_demux(int Mod, int numBits, int **DI, int **DO)
 {
 	unsigned InLen;
 	unsigned OutLen;
@@ -36,7 +36,6 @@ void tx_bmap_demux(int Mod, int numBits, int **DO, int **DI)
     OutLen = 0;
 	}
 
-	*DO = (int *)malloc(OutLen * sizeof(int));
 
 	switch (Mod){
 	case 0 :

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "debug.h"
-void rx_bmap_mux(int Mod, int numBits, int **DO, int **DI)
+void rx_bmap_mux(int Mod, int numBits, int **DI, int **DO)
 {
   unsigned InLen;
 	unsigned OutLen;
@@ -36,8 +36,7 @@ void rx_bmap_mux(int Mod, int numBits, int **DO, int **DI)
     InLen = 0;
 	}
 
-	*DO = (int *)malloc(numBits * sizeof(int));
-  
+
   switch (Mod){
 
 	case 0 :
@@ -45,7 +44,7 @@ void rx_bmap_mux(int Mod, int numBits, int **DO, int **DI)
 			(*DO)[i] = (*DI)[i];
 		}
 		break;
-    
+
 	case 1 :
 		for(i = 0; i < InLen; i++){
 			(*DO)[i*2]   = ((*DI)[i] & 0x1) ;

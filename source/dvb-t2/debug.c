@@ -30,6 +30,22 @@ void debug(int level, const char *fmt, ...)
 	}
 }
 
+void write_ai(const char *fname, int len, int **ai)
+{
+
+  int i;
+  FILE *fid;
+
+  fid = fopen(fname, "w");
+
+  for(i=0; i<len; i++)
+    {
+      fprintf(fid, "%d\n", (*ai)[i]);
+    }
+
+  fclose(fid);
+}
+
 void write_af(const char *fname, int len, float **af)
 {
 

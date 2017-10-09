@@ -23,20 +23,15 @@ int tx_ift_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ)
 	 */
 	int Mod = config->Mod;
 	int Len = config->Len;
-	int numBits = config->numBits;
+	//int numBits = config->numBits;
   int FftTyp = config->FftTyp;
 
-  //printf("cfg file name %c\n", config->FnameTxIftMapDoI);
 
   float *DoAlignI, *DoAlignQ;
 
   DoAlignI = (float *)malloc(sizeof(float) * FFT_SIZE[FftTyp]);
   DoAlignQ = (float *)malloc(sizeof(float) * FFT_SIZE[FftTyp]);
 
-
-
-  //debug(V_DEBUG,"output file name is :  %s\n",config->FnameTxIftMapDoI);
-  //debug(V_DEBUG,"Mod is  %d ",config->Mod);
 
 	/*
 	 * procedure
@@ -47,9 +42,8 @@ int tx_ift_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ)
   /*
    * log
    */
-  //write_af(FnameDoI, Len, &(*DoI));
-  //write_af("./log/tx_ift_map__do_map_i.txt", Len, &(*DoI));
-  //write_af("./log/tx_ift_map__do_map_q.txt", Len, &(*DoQ));
+  write_af(config->FnameTxIftAlignDoI, FFT_SIZE[FftTyp], &(DoAlignI));
+  write_af(config->FnameTxIftAlignDoQ, FFT_SIZE[FftTyp], &(DoAlignQ));
 
   free(DoAlignI);
   free(DoAlignQ);

@@ -12,5 +12,11 @@
 #define RX_FFT_ALIGN_H_
 
 #include "config.h"
-int rx_fft_align(int FftTyp, int Mod, int numBits, float **DiI, float **DiQ, float **DoI, float **DoQ);
+int rx_fft_align(int FftTyp,  \
+                 int Mod,     \
+                 int numBits, \
+                 float **DiI, \
+                 float **DiQ, \
+                 float **DoI, \
+                 float **DoQ );
 #endif
