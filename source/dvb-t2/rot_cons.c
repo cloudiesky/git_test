@@ -32,8 +32,12 @@ void rot_cons(int Mod, float c_f[64][2])
 
     case 1 : // QPSK
       for (i=0; i<4; i++) {
-        c_f[i][0] = C_POINTS_QPSK[i][0] * cos(ROT_QPSK) / C_QPSK;
-        c_f[i][1] = C_POINTS_QPSK[i][1] * sin(ROT_QPSK) / C_QPSK;
+        c_f[i][0] = (C_POINTS_QPSK[i][0] * cos(ROT_QPSK) - \
+                     C_POINTS_QPSK[i][1] * sin(ROT_QPSK)   \
+                     )/ C_QPSK;
+        c_f[i][1] = (C_POINTS_QPSK[i][0] * sin(ROT_QPSK)  +  \
+                     C_POINTS_QPSK[i][1] * cos(ROT_QPSK)    \
+                     )/ C_QPSK;
         debug(V_DEBUG,"%d,%f,%f\n",i,c_f[i][0],c_f[i][1]);
       }
       debug(V_DEBUG,"c_qpsk %f\n",(C_QPSK));
@@ -41,8 +45,12 @@ void rot_cons(int Mod, float c_f[64][2])
 
     case 2 : // 16-QAM
       for (i=0; i<16; i++) {
-        c_f[i][0] = C_POINTS_16QAM[i][0] * cos(ROT_16QAM) / C_16QAM;
-        c_f[i][1] = C_POINTS_16QAM[i][1] * sin(ROT_16QAM) / C_16QAM;
+        c_f[i][0] = (C_POINTS_16QAM[i][0] * cos(ROT_16QAM) - \
+                     C_POINTS_16QAM[i][1] * sin(ROT_16QAM)   \
+                     )/ C_16QAM;
+        c_f[i][1] = (C_POINTS_16QAM[i][0] * sin(ROT_16QAM) + \
+                     C_POINTS_16QAM[i][1] * cos(ROT_16QAM)   \
+                     )/ C_16QAM;
         debug(V_DEBUG,"%d,%f,%f\n",i,c_f[i][0],c_f[i][1]);
       }
       debug(V_DEBUG,"c_16qam %f\n",(C_16QAM));
@@ -50,8 +58,12 @@ void rot_cons(int Mod, float c_f[64][2])
 
     case 3 :
       for (i=0; i<64; i++) {
-        c_f[i][0] = C_POINTS_64QAM[i][0] * cos(ROT_64QAM) / C_64QAM;
-        c_f[i][1] = C_POINTS_64QAM[i][1] * sin(ROT_64QAM) / C_64QAM;
+        c_f[i][0] = (C_POINTS_64QAM[i][0] * cos(ROT_64QAM) - \
+                     C_POINTS_64QAM[i][1] * sin(ROT_64QAM)   \
+                     ) / C_64QAM;
+        c_f[i][1] = (C_POINTS_64QAM[i][0] * sin(ROT_64QAM) + \
+                     C_POINTS_64QAM[i][1] * cos(ROT_64QAM)   \
+                     )/ C_64QAM;
         debug(V_DEBUG,"%d,%f %fi,%d,%d\n",i,c_f[i][0],c_f[i][1],C_POINTS_64QAM[i][0],C_POINTS_64QAM[i][1]);
       }
       debug(V_DEBUG,"c_64qam %f\n",(C_64QAM));
