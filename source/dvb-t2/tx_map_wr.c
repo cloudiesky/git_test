@@ -1,7 +1,7 @@
 /*
  * tx_bmap_wr.c
  *
- *  Created on: 2017Äê9ÔÂ20ÈÕ
+ *  Created on: 2017å¹´9æœˆ20æ—¥
  *      Author: cloudieskyx
  */
 
@@ -10,9 +10,9 @@
 
 #include "config.h"
 #include "debug.h"
-#include "tx_bmap.h"
+#include "tx_map.h"
 
-int tx_bmap_wr(cfg_t *config, int **Di, int **Do)
+int tx_map_wr(cfg_t *config, int **Di, float **DoI, float **DoQ)
 {
 
   //int *DoDemux;
@@ -21,8 +21,8 @@ int tx_bmap_wr(cfg_t *config, int **Di, int **Do)
 	 * parameter definition
 	 */
 	int Mod = config->Mod;
-	//int Len = config->Len;
-	int numBits = config->numBits;
+	int Len = config->Len;
+	//int numBits = config->numBits;
 
 
   //debug(V_DEBUG,"output file name is :  %s\n",config->FnameTxBmapMapDoI);
@@ -32,14 +32,14 @@ int tx_bmap_wr(cfg_t *config, int **Di, int **Do)
 	 */
 
 	//DoDemux = (int *)malloc(numBits * sizeof(int));
-  tx_bmap(Mod, numBits, &(*Di), &(*Do));
-  //tx_bmap_map(Mod, Len, &DoDemux, &(*DoI), &(*DoQ));
+  //tx_bmap_demux(Mod, numBits, &(*Di), &DoDemux);
+  tx_map(Mod, Len, &(*Di), &(*DoI), &(*DoQ));
 
-   /*
-    * log
-    */
-  //write_af(config->FnameTxBmapMapDoI, Len, &(*DoI));
-  //write_af(config->FnameTxBmapMapDoQ, Len, &(*DoQ));
+  /*
+   * log
+   */
+  write_af(config->FnameTxBmapMapDoI, Len, &(*DoI));
+  write_af(config->FnameTxBmapMapDoQ, Len, &(*DoQ));
 
   //free(DoDemux);
 

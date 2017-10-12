@@ -8,9 +8,9 @@
   ============================================================================
 */
 
-#ifndef RX_FFT_WR_H_
-#define RX_FFT_WR_H_
+#ifndef RX_FADAPT_WR_H_
+#define RX_FADAPT_WR_H_
 
 #include "config.h"
-int rx_fft_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ);
+int rx_fadapt_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ);
 #endif

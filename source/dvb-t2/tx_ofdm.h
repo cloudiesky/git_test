@@ -8,9 +8,9 @@
   ============================================================================
 */
 
-#ifndef TX_IFT_CORE_H_
-#define TX_IFT_CORE_H_
+#ifndef TX_OFDM_CORE_H_
+#define TX_OFDM_CORE_H_
 
 #include "config.h"
-int tx_ift_core(int FftTyp, float **DiI, float **DiQ, float **DoI, float **DoQ);
+int tx_ofdm(int FftTyp, float **DiI, float **DiQ, float **DoI, float **DoQ);
 #endif

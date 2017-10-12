@@ -8,9 +8,9 @@
   ============================================================================
 */
 
-#ifndef TX_IFT_ALIGN_H_
-#define TX_IFT_ALIGN_H_
+#ifndef TX_MAP_WR_H_
+#define TX_MAP_WR_H_
 
 #include "config.h"
-int tx_ift_align(int FftTyp, int Mod, int numBits, float **DiI, float **DiQ, float **DoI, float **DoQ);
+int tx_map_wr(cfg_t *config, int **Di, float **DoI, float **DoQ);
 #endif

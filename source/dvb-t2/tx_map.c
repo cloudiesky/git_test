@@ -15,11 +15,11 @@
 #include "global.h"
 #include "rot_cons.h"
 
-void tx_bmap_map(int Mod,           \
-                 int Len,           \
-                 int **DI,          \
-                 float **DO_I,      \
-                 float **DO_Q){
+void tx_map(int Mod,                \
+            int Len,                \
+            int **DI,               \
+            float **DO_I,           \
+            float **DO_Q){
   int i;
   float c_f[64][2];
 

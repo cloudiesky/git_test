@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "debug.h"
-void tx_bmap_demux(int Mod, int numBits, int **DI, int **DO)
+void tx_bmap(int Mod, int numBits, int **DI, int **DO)
 {
 	unsigned InLen;
 	unsigned OutLen;

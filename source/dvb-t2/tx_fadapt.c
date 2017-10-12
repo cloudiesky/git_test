@@ -13,7 +13,7 @@
 #include "global.h"
 #include "debug.h"
 
-int tx_ift_align(int FftTyp, int Mod, int Len, float **DiI, float **DiQ, float **DoI, float **DoQ)
+int tx_fadapt(int FftTyp, int Mod, int Len, float **DiI, float **DiQ, float **DoI, float **DoQ)
 {
 
   int i;

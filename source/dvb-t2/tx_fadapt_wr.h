@@ -8,9 +8,9 @@
   ============================================================================
 */
 
-#ifndef TX_BMAP_WR_H_
-#define TX_BMAP_WR_H_
+#ifndef TX_FADAPT_WR_H_
+#define TX_FADAPT_WR_H_
 
 #include "config.h"
-int tx_bmap_wr(cfg_t *config, int **Di, int **Do);
+int tx_fadapt_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ);
 #endif

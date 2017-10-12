@@ -18,8 +18,11 @@
 #include "init_cfg.h"
 #include "tx_bmap_di_gen.h"
 #include "tx_bmap_wr.h"
-#include "tx_ift_wr.h"
-#include "rx_fft_wr.h"
+#include "tx_map_wr.h"
+#include "tx_fadapt_wr.h"
+#include "tx_ofdm_wr.h"
+#include "rx_ofdm_wr.h"
+#include "rx_fadapt_wr.h"
 #include "rx_bmap_wr.h"
 #include "cmp_tx_rx.h"
 
@@ -30,20 +33,36 @@ int main(void) {
    FILE *FidCfgFile;
 
   int *TxBmapDi;
-  float *TxBmapDoI;
-  float *TxBmapDoQ;
+  int *TxBmapDo;
+
+  int *TxMapDi;
+  float *TxMapDoI;
+  float *TxMapDoQ;
 
   float *RxBmapDiI;
   float *RxBmapDiQ;
   int *RxBmapDo;
 
-  float *TxIftDoI;
-  float *TxIftDoQ;
+  float *TxFadaptDiI;
+  float *TxFadaptDiQ;
+  float *TxFadaptDoI;
+  float *TxFadaptDoQ;
 
-  float *RxFftDiI;
-  float *RxFftDiQ;
-  float *RxFftDoI;
-  float *RxFftDoQ;
+  float *TxOfdmDiI;
+  float *TxOfdmDiQ;
+  float *TxOfdmDoI;
+  float *TxOfdmDoQ;
+
+  float *RxOfdmDiI;
+  float *RxOfdmDiQ;
+  float *RxOfdmDoI;
+  float *RxOfdmDoQ;
+
+  float *RxFadaptDiI;
+  float *RxFadaptDiQ;
+  float *RxFadaptDoI;
+  float *RxFadaptDoQ;
+
   puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
 
   printf("Info Verbosity = %d\n",VERB);
@@ -58,46 +77,69 @@ int main(void) {
 	TxBmapDi=(int*)malloc((config->numBits)*(sizeof(int)));
   tx_bmap_di_gen(config, &TxBmapDi);
 
-  // tx map
-  TxBmapDoI = (float*)malloc(config->Len * sizeof(float));
-  TxBmapDoQ = (float*)malloc(config->Len * sizeof(float));
-  tx_bmap_wr(config, &TxBmapDi, &TxBmapDoI, &TxBmapDoQ);
+  // tx bmap
+  TxBmapDo = (int *)malloc(config->Len * sizeof(int));
+  tx_bmap_wr(config, &TxBmapDi, &TxBmapDo);
 
-  // tx ifft
-  TxIftDoI = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
-  TxIftDoQ = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
-  tx_ift_wr(config,  &TxBmapDoI, &TxBmapDoQ, &TxIftDoI, &TxIftDoQ);
+ // tx map
+  TxMapDi = TxBmapDo;
+  TxMapDoI = (float*)malloc(config->Len * sizeof(float));
+  TxMapDoQ = (float*)malloc(config->Len * sizeof(float));
+  tx_map_wr(config, &TxMapDi, &TxMapDoI, &TxMapDoQ);
+
+  // tx frame adapt
+  TxFadaptDiI = TxMapDoI;
+  TxFadaptDiQ = TxMapDoQ;
+  TxFadaptDoI = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
+  TxFadaptDoQ = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
+  tx_fadapt_wr(config,  &TxFadaptDiI, &TxFadaptDiQ, &TxFadaptDoI, &TxFadaptDoQ);
+
+  // tx ofdm
+  TxOfdmDiI = TxFadaptDoI ;
+  TxOfdmDiQ = TxFadaptDoQ ;
+  TxOfdmDoI = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
+  TxOfdmDoQ = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
+  tx_ofdm_wr(config,  &TxOfdmDiI, &TxOfdmDiQ, &TxOfdmDoI, &TxOfdmDoQ);
 
 
-  // rx fft
-  RxFftDiI = TxIftDoI;
-  RxFftDiQ = TxIftDoQ;
-  RxFftDoI = (float *)malloc(sizeof(float)*(config->Len));
-  RxFftDoQ = (float *)malloc(sizeof(float)*(config->Len));
-  rx_fft_wr(config, &RxFftDiI, &RxFftDiQ, &RxFftDoI, &RxFftDoQ);
+  // rx ofdm
+  RxOfdmDiI = TxOfdmDoI;
+  RxOfdmDiQ = TxOfdmDoQ;
+  RxOfdmDoI = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
+  RxOfdmDoQ = (float *)malloc(sizeof(float)*FFT_SIZE[config->FftTyp]);
+  rx_ofdm_wr(config, &RxOfdmDiI, &RxOfdmDiQ, &RxOfdmDoI, &RxOfdmDoQ);
+
+ // rx fadapt
+  RxFadaptDiI = RxOfdmDoI;
+  RxFadaptDiQ = RxOfdmDoQ;
+  RxFadaptDoI = (float *)malloc(sizeof(float)*(config->Len));
+  RxFadaptDoQ = (float *)malloc(sizeof(float)*(config->Len));
+  rx_fadapt_wr(config, &RxFadaptDiI, &RxFadaptDiQ, &RxFadaptDoI, &RxFadaptDoQ);
 
   // rx demap
-  RxBmapDiI = RxFftDoI;
-  RxBmapDiQ = RxFftDoQ;
+  RxBmapDiI = RxFadaptDoI;
+  RxBmapDiQ = RxFadaptDoQ;
   RxBmapDo = (int *)malloc(sizeof(int) * config->numBits);
   rx_bmap_wr(config, &RxBmapDiI, &RxBmapDiQ, &RxBmapDo);
 
 
   cmp_tx_rx(config->numBits, &TxBmapDi, &RxBmapDo);
 
-  free(TxBmapDoI);
-  free(TxBmapDoQ);
+  free(TxBmapDo);
+
+  free(TxMapDoI);
+  free(TxMapDoQ);
 
   free(RxBmapDo);
 
-  free(TxIftDoI);
-  free(TxIftDoQ);
+  free(TxOfdmDoI);
+  free(TxOfdmDoQ);
 
   //free(RxFftDiI);
   //free(RxFftDiQ);
 
-  free(RxFftDoI);
-  free(RxFftDoQ);
+  /* free(RxFftDoI); */
+  /* free(RxFftDoQ); */
 
   //free(RxBmapDiI);
   //free(RxBmapDiQ);

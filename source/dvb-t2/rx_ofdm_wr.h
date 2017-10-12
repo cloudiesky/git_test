@@ -8,9 +8,9 @@
   ============================================================================
 */
 
-#ifndef TX_IFT_WR_H_
-#define TX_IFT_WR_H_
+#ifndef RX_OFDM_WR_H_
+#define RX_OFDM_WR_H_
 
 #include "config.h"
-int tx_ift_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ);
+int rx_ofdm_wr(cfg_t *config, float **DiI, float **DiQ, float **DoI, float **DoQ);
 #endif

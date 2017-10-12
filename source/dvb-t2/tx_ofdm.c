@@ -1,5 +1,5 @@
 /*
- * tx_ift_core.c
+ * tx_ofdm_core.c
  *
  *  Created on: 2017年9月20日
  *      Author: cloudieskyx
@@ -16,7 +16,7 @@
 #include "debug.h"
 #include "ift.h"
 
-int tx_ift_core(int FftTyp, float **DiI, float **DiQ, float **DoI, float **DoQ)
+int tx_ofdm(int FftTyp, float **DiI, float **DiQ, float **DoI, float **DoQ)
 {
 
   size_t n;
