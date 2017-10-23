@@ -1,0 +1,4 @@
+Mod = 3
+Len = 518400
+InSrc = 0
+FftTyp = 1
